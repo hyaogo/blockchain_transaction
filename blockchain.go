@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/boltdb/bolt"
 	"log"
 	"os"
+
+	"github.com/boltdb/bolt"
 )
 
 const dbFile = "blockchain.db"
@@ -172,7 +173,7 @@ func NewBlockchain(address string) *Blockchain {
 	if err != nil {
 		log.Panic(err)
 	}
-	err = db.Update(func(tx *bolt.Tx) error {
+	err = db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(blockBucket))
 		tip = b.Get([]byte("1"))
 		return nil
@@ -210,12 +211,11 @@ func CreateBlockchain(address string) *Blockchain {
 			log.Panic(err)
 		}
 
-		err = b.Put([]byte("l"), genesis.Hash)
+		err = b.Put([]byte("1"), genesis.Hash)
 		if err != nil {
 			log.Panic(err)
 		}
 		tip = genesis.Hash
-
 		return nil
 	})
 
