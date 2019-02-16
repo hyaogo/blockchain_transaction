@@ -51,7 +51,7 @@ func NewGenesisBlock(coinbase *Transaction) *Block {
 func DeserializeBlock(d []byte) *Block {
 	var block Block
 	decoder := gob.NewDecoder(bytes.NewReader(d))
-	err := decoder.Decode(block)
+	err := decoder.Decode(&block)
 	if err != nil {
 		log.Panic(err)
 	}
