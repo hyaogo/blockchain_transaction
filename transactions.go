@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-const subsidy = 10
+const subsidy = 500
 
 type Transaction struct {
 	ID   []byte
